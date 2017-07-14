@@ -1,18 +1,20 @@
-4 Clojure Problems
+(ns basics.4cloj)
 
-# Prob 27
+;;4 Clojure Problems
+
+;; Prob 27
 (
  (fn [arg]
   (if (=  (seq arg) (into '() arg))
       true
       false )
-   ) 
+   )
  "mom")
 
-# Prob 28
-# Soln 1
+;;  Prob 28
+;; Soln 1
 (defn f [arg1]
-   (mapcat 
+   (mapcat
     (fn myflat [x]
       (if (coll? x )
         (if (empty? x)
@@ -22,9 +24,9 @@
         [x])
       )
     arg1)
-) 
+)
 
-# Soln 2
+;; Soln 2
 (defn b [x]
   (reduce (fn flat [acc item]
             (if (coll? item)
@@ -33,5 +35,5 @@
           '()
           x))
 
-# Soln 3
+;; Soln 3
 (fn [l] (mapcat (fn flat [x] (if (coll? x) (mapcat flat x) [x])) l) )

@@ -1,13 +1,23 @@
+(ns basics.my_functs)
+
 ;; Custom implementation of inbuilt clojure functions
 
-;; 1. Custom map
+;; 1. Custom concat for only 2 args
+(defn sam-cat [ls1 ls2]
+  (if (and (empty? ls1) (empty? ls2))
+    '()
+    (if (empty? ls2)
+      (seq ls1)
+      (sam-cat (conj (vec ls1) (first ls2)) (rest ls2)))))
+
+;; 2. Custom map
 (defn sam-map [f arg]
   (when-not (empty? arg)
     (sam-cat
      [(f (first arg))]
      (sam-map f (rest arg)))))
 
-;; 2. Custom map with helper instead of concat
+;; 3. Custom map with helper instead of concat
 (defn sam-mcc [f arr acc]
   (if (empty? arr)
     acc
@@ -16,39 +26,40 @@
     (cons (f (first arr)) (sam-mcc f (rest arr) acc) ) ;; cons use karke hogaya :P
     ))
 
-;; 3. Custom reduce
+;; 4. Custom reduce
 (defn sam-red [f arr acc]
   (if (empty? arr)
     acc
     (sam-red f (rest arr) (f acc (first arr)))))
 
-;; 4. Custom drop
+;; 5. Custom drop
 (defn sam-drop [n arr]
-  (if (zero? n)
+  (if (<= n 0)
     arr
     (sam-drop (dec n) (rest arr))))
 
-;; 5. Custom take
+;; 6. Custom take
 (defn sam-take [n arr]
   (if (>= n (count arr))
     arr
-    (if (zero? n)
+    (if (<= n 0)
       '()
       (conj (sam-take (dec n) (rest arr)) (first arr)))))
 
-;; 6. MultiArity function
+;; 7. MultiArity function
 (defn tp
   ([a] (inc a))
   ([b c] (+ b c)))
 
-;; 7. Custom take-while
+;; 8. Custom take-while
 (defn sam-take-while [f arr]
   (if (empty? arr)
     arr
     (if (f (first arr))
-      (conj (sam-take-while f (rest arr)) (first arr)))))
+      (conj (sam-take-while f (rest arr)) (first arr))
+      '())))
 
-;; 8. Custom drop-while
+;; 9. Custom drop-while
 (defn sam-drop-while [f arr]
   (if (empty? arr)
     arr
@@ -56,27 +67,19 @@
       (sam-drop-while f (rest arr))
       arr )))
 
-;; 9. Custom filter
+;; 10. Custom filter
 (defn sam-filter [f arr]
   (when-not (empty? arr)
     (if (f (first arr))
       (cons (first arr) (sam-filter f (rest arr)))
       (sam-filter f (rest arr)))))
 
-;; 10. Custom some
+;; 11. Custom some
 (defn sam-some [f arr]
   (when-not (empty? arr)
     (if (f (first arr))
       true
       (sam-some f (rest arr)))))
-
-;; 11. Custom concat for only 2 args
-(defn sam-cat [ls1 ls2]
-  (if (and (empty? ls1) (empty? ls2))
-    '()
-    (if (empty? ls2)
-      (seq ls1)
-      (sam-cat (conj (vec ls1) (first ls2)) (rest ls2)))))
 
 ;; 12. Custom Remove first element
 (defn mod-remove [f arr]
