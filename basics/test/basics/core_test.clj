@@ -122,3 +122,5 @@
 ;; Sam sort by
 (exlib/expect '("a" "c" "bb" "ddd") (sam-sortby count ["bb" "a" "ddd" "c"]))
 (exlib/expect '("a" "bb" "cc" "ddd" "eee") (sam-sortby count ["bb" "a" "ddd" "eee" "cc"]))
+
+(exlib/expect 1400 (exlib/in [100 200 300 1400]))

@@ -126,8 +126,9 @@
               (rest arr))))
 
 (defn all-cat [& args]
-    (all-help [] args)
-  #_(if (empty? (first (rest args)))
+ #_ (all-help [] args) ;; with use of helper
+  (reduce add-one args) ;; when we want to reduce to one use it
+  #_(if (empty? (first (rest args))) ;; gaya hua logic
     (first args)
     (all-cat (add-one (first args) (second args)) (drop 2 args))))
 
@@ -196,3 +197,33 @@
   (let [key-val-arr (sam-pair f arr {})
         sorted-pair (cus-sort key-val-arr)]
     (sam-unpair sorted-pair [])))
+
+
+;; 20. Replacing a string in an passed string and returning the modified string
+(require '[clojure.string :as s])
+
+(defn clean
+  [text]
+  (s/replace (s/trim text) #"lol" "LOL"))
+
+;;(clean "Are u nuts..!! lol! ;)  ")
+
+;; 21. Sam reverse
+(defn sam-rev [ls rev]
+  (if (empty? ls)
+    rev
+    (sam-rev (rest ls) (cons (first ls) rev ))))
+
+;; 22. Sam Complement
+
+;; Sam comp helper
+(defn comp-help [fls acc]
+  (if (empty? fls)
+    acc
+    (comp-help (rest fls) ((first fls) acc))))
+
+;; Sam comp
+(defn sam-comp [& funcs]
+  (let [revf (sam-rev funcs [])]
+    (fn f [& args]
+      (comp-help (rest revf) (apply (first revf) args)))))
