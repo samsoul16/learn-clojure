@@ -1,12 +1,9 @@
 (ns basics.core-test
-  (:require [clojure.test :refer :all]
+  (:require #_[clojure.test :refer :all]
             [basics.core :refer :all]
             [basics.my_functs :refer :all]
             [expectations :as exlib]))
 
-#_(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
 
 ;; Sam concat
 (exlib/expect [1 2 3] (sam-cat [1 2] [3]))
@@ -124,3 +121,24 @@
 (exlib/expect '("a" "bb" "cc" "ddd" "eee") (sam-sortby count ["bb" "a" "ddd" "eee" "cc"]))
 
 (exlib/expect 1400 (exlib/in [100 200 300 1400]))
+
+(exlib/expect  {1  {:pegged true, :connections {6 3, 4 2}},
+                2  {:pegged true, :connections {9 5, 7 4}},
+                3  {:pegged false, :connections {10 6, 8 5}},
+                4  {:pegged false, :connections {13 8, 11 7, 6 5, 1 2}},
+                5  {:pegged false, :connections {12 8, 14 9}},
+                6  {:pegged false, :connections {15 10, 13 9, 4 5, 1 3}},
+                7  {:pegged false, :connections {9 8, 2 4}},
+                8  {:pegged false, :connections {10 9, 3 5}},
+                9  {:pegged true, :connections {7 8, 2 5}},
+                10 {:pegged false, :connections {8 9, 3 6}},
+                11 {:pegged false, :connections {13 12, 4 7}},
+                12 {:pegged false, :connections {14 13, 5 8}},
+                13 {:pegged false, :connections {15 14, 11 12, 6 9, 4 8}},
+                14 {:pegged false, :connections {12 13, 5 9}},
+                15 {:pegged false, :connections {13 14, 6 10}},
+                :rows 5} (mymap) )
+
+(exlib/expect {1 {:pegged true, :connections {6 3, 4 2}}, 2 {:pegged true, :connections {9 5, 7 4}}, 9 {:pegged true, :connections {7 8, 2 5}}} (gettrue (mymap)))
+
+(exlib/expect {6 3, 4 2} (getconnects (gettrue (mymap)) 1))
