@@ -114,3 +114,9 @@
 
 
 ;; Prob 12
+(defn trino [n]
+  ((fn [acc x]
+      (if (zero? x)
+        acc
+        (recur (+ acc x) (dec x))))
+   0 n))

@@ -47,3 +47,5 @@
 #_(exlib/expect 5832 (highmul (digits in) 0)) ;;  for 4digit product
 
 ;; Prob 12
+(exlib/expect 28 (trino 7))
+(exlib/expect [1 3 7] (fact 21 1 []))
